@@ -13,4 +13,5 @@
     description = "Minecraft G4m3r";
   };
   services.mingetty.autologinUser = lib.mkForce "minecraft";
+  networking.hostName = "minecraft-kiosk";
 }
