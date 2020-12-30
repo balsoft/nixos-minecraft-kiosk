@@ -27,23 +27,25 @@ and agree with them.
 
 ## Usage
 
-### Stateless minecraft flash drive (build from any amd64 Linux distribution)
+First of all, you will have to get Nix. The easiest way to do this is to
+[use the installer script](https://nixos.org/download.html). Then you need
+to get the unstable version of Nix with `nix-shell -p nixUnstable`. All
+of the following operations should happen within that shell.
 
-1. [Get Nix](https://nixos.org/download.html)
-2. Get `nixUnstable`: `nix-shell -p nixUnstable`
-3. Build the ISO: `nix build github:balsoft/nixos-minecraft-kiosk`
-4. Flash the ISO (the sole file contained in `result/iso`) to a flash drive
+
+### Stateless minecraft flash drive
+
+1. Build the ISO: `nix --experimental-features "flakes nix-command" build github:balsoft/nixos-minecraft-kiosk#isoImage`
+2. Flash the ISO (the sole file contained in `result/iso`) to a flash drive
    (I won't give any instructions here so that if you ruin your system, I'm
    not to blame)
-5. Boot it!
+3. Boot it!
 
 Note that the resulting flash drive will be stateless (i.e. your progress
 won't persist through reboots). If you want to make it stateful, some additional
 work is needed.
 
-### VM (only build from amd64 NixOS)
+### VM
 
-1. Get `nixUnstable`: `nix-shell -p nixUnstable`
-2. `nixos-rebuild --build-vm github:balsoft/nixos-minecraft-kiosk#minecraft-kiosk`
-3. Find `/nix/store/.../run-nixos-vm` in the last line of the output and
-   run that command.
+1. Build the VM start script: `nix --experimental-features "flakes nix-command" build github:balsoft/nixos-minecraft-kiosk#vm`
+2. Run it: `./result/bin/run-minecraft-kiosk-vm`
